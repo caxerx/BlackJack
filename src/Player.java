@@ -23,10 +23,10 @@ public class Player {
      */
     public Player addHand(int card) {
         //add a hand
-        hand = BlackJack.arrayAddItem(hand, card);
+        hand = BlackJack_BACKUP.arrayAppend(hand, card);
 
         //add the point of the new card to hand point
-        int cardPoint = BlackJack.getCardPoint(card);
+        int cardPoint = BlackJack_BACKUP.getCardPoint(card);
         point += cardPoint;
 
         //toggle when player get the first ace
@@ -38,7 +38,7 @@ public class Player {
         if (point > 21) {
             status = Status.BUST;
         } else if (getPoints() == 21) {
-            status = Status.BLACKJACK;
+            status = Status.WIN;
         }
         return this;
     }
@@ -55,12 +55,12 @@ public class Player {
     /**
      * Get the card list and status of the player like "[ RANK:SUIT RANK:SUIT ... ] Status!" , use to show on console
      *
-     * @return Formatted player's Info
+     * @return Formatted card's Info
      */
-    public String getPlayerInfo() {
+    public String getCardInfo() {
         String cardInfo = "[ ";
         for (int card : hand) {
-            cardInfo = cardInfo + BlackJack.getCardDisplayName(card) + " ";
+            cardInfo = cardInfo + BlackJack_BACKUP.getCardDisplayName(card) + " ";
         }
         return cardInfo + "] " + status.getDisplayName();
     }

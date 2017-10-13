@@ -37,7 +37,7 @@ public class Deck {
      * @param card card to add
      */
     public void addCard(int card) {
-        deck = BlackJack.arrayAddItem(deck, card);
+        deck = BlackJack_BACKUP.arrayAppend(deck, card);
     }
 
     /**
