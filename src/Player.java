@@ -23,10 +23,10 @@ public class Player {
      */
     public Player addHand(int card) {
         //add a hand
-        hand = BlackJack_BACKUP.arrayAppend(hand, card);
+        hand = BlackJack.arrayAppend(hand, card);
 
         //add the point of the new card to hand point
-        int cardPoint = BlackJack_BACKUP.getCardPoint(card);
+        int cardPoint = BlackJack.getCardPoint(card);
         point += cardPoint;
 
         //toggle when player get the first ace
@@ -60,7 +60,7 @@ public class Player {
     public String getCardInfo() {
         String cardInfo = "[ ";
         for (int card : hand) {
-            cardInfo = cardInfo + BlackJack_BACKUP.getCardDisplayName(card) + " ";
+            cardInfo = cardInfo + BlackJack.getCardDisplayName(card) + " ";
         }
         return cardInfo + "] " + status.getDisplayName();
     }

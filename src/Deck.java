@@ -13,7 +13,7 @@ import java.util.Random;
  * Deck class, provide some method to control the deck array.
  */
 public class Deck {
-    private int[] deck; //To store the deck
+    private int[] deck = new int[0]; //To store the deck, initialize a 0 size array to prevent Null-Pointer Exception
 
     /**
      * Get a deck that shuffled with Fisher-Yates shuffle algorithm
@@ -37,7 +37,7 @@ public class Deck {
      * @param card card to add
      */
     public void addCard(int card) {
-        deck = BlackJack_BACKUP.arrayAppend(deck, card);
+        deck = BlackJack.arrayAppend(deck, card);
     }
 
     /**
