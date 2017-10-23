@@ -77,7 +77,8 @@ public class BlackJack {
 
             //Draw players second card and print the hands
             for (int i = 0; i < numOfPlayer; i++) {
-                int[] playerHand = players[i].addHand(deck.draw()).getHand();
+                players[i].addHand(deck.draw());
+                int[] playerHand = players[i].getHand();
                 //The first card is an unknown card
                 System.out.println("Player " + (i + 1) + "'s Hand: [ Unknown " + getCardDisplayName(playerHand[1]) + " ]");
 
@@ -107,7 +108,7 @@ public class BlackJack {
                 System.out.println("Player " + (i + 1) + "'s Hand: " + players[i].getCardInfo());
                 //Require player to input
                 int standOrHit = 1;
-                while (standOrHit == 1 && players[i].chkStatus() == Status.STAND) {
+                while (standOrHit == 1 && players[i].chkStatus() == Status.STAND && players[i].getPoints() != 21) {
                     standOrHit = BlackJack.inputAndValidate((input -> input == 0 || input == 1), "Player " + (i + 1) + ", do you want to Stand or Hit (0-Stand, 1-Hit) ", "You must input 0 or 1!", scanner);
                     if (standOrHit == 1) {
                         players[i].addHand(deck.draw());
@@ -128,7 +129,7 @@ public class BlackJack {
 
             //Check player's status, if any player is standing, start dealer's turn
             for (Player player : players) {
-                if (player.chkStatus() == Status.STAND || player.chkStatus() == Status.WIN) {
+                if (player.chkStatus() == Status.STAND) {
                     startDealerRound = true;
                     break;
                 }
@@ -146,6 +147,7 @@ public class BlackJack {
                 while (dealer.getPoints() < 17) {
                     System.out.println("Lower than 17, add new cards!");
                     dealer.addHand(deck.draw());
+                    dealer.chkStatus();
                     //Show dealer's hands after they get a card
                     System.out.println("Dealer's Hand: " + dealer.getCardInfo());
                 }

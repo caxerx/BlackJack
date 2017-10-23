@@ -10,6 +10,7 @@
  * Dealer class, inheritance from Player class. Change the points calculation method.
  */
 public class Dealer extends Player {
+
     /**
      * Get the final calculated point of the dealer, override player's method
      *

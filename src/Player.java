@@ -21,7 +21,7 @@ public class Player {
      * @param card card to add
      * @return Player object
      */
-    public Player addHand(int card) {
+    public void addHand(int card) {
         //add a hand
         hand = BlackJack.arrayAppend(hand, card);
 
@@ -34,13 +34,10 @@ public class Player {
             firstAce = true;
         }
 
-        //check whether player bust or blackjack
+        //check whether player bust
         if (point > 21) {
             status = Status.BUST;
-        } else if (getPoints() == 21) {
-            status = Status.WIN;
         }
-        return this;
     }
 
     /**
@@ -90,6 +87,7 @@ public class Player {
      * @return Status of player's hand
      */
     public Status chkStatus() {
+        //return status
         return status;
     }
 
