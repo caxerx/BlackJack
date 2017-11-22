@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.function.Function;
 
 /**
- * The main class of BlackJack, included the utilities method, Game flow and global variable
+ * The main class of BlackJack, included the utilities method, Game flow
  */
 public class BlackJack {
 
@@ -162,11 +162,9 @@ public class BlackJack {
              */
 
             int dealerPoint = dealer.getPoints(); //get dealer's point
-
             //find out each player's status
             for (int i = 0; i < numOfPlayer; i++) {
-
-                if (players[i].chkStatus() == Status.STAND || players[i].chkStatus() == Status.WIN) { //We only check the standing player because we already know who bust or blackjack
+                if (players[i].chkStatus() == Status.STAND) { //We only check the standing player because we already know who bust or blackjack
                     //If dealer is not bust, check player's point
                     if (dealer.chkStatus() != Status.BUST) {
                         if (players[i].getPoints() > dealerPoint) {
@@ -180,11 +178,13 @@ public class BlackJack {
                         //if dealer is bust, all standing player will win
                         players[i].setStatus(Status.WIN);
                     }
+                } else if (players[i].chkStatus() == Status.BLACKJACK && dealer.chkStatus() == Status.BLACKJACK) { //PUSH if both player and dealer got blackjack
+                    players[i].setStatus(Status.PUSH);
                 }
             }
 
         } catch (ArrayIndexOutOfBoundsException e) { //when deck is empty, exception will throw
-            //Finally, let them know the game terminated
+            //let them know the game terminated because out of card
             System.out.println("Deck is empty, game ended.");
         }
 
@@ -212,67 +212,10 @@ public class BlackJack {
      * @return The card's display name shown by "RANK:SUIT", return "Unknown" if card not exist;
      */
     public static String getCardDisplayName(int card) {
-        String rank;
-        String suit;
-        switch (card / 13) {
-            case 0:
-                suit = "Spades";
-                break;
-            case 1:
-                suit = "Hearts";
-                break;
-            case 2:
-                suit = "Clubs";
-                break;
-            case 3:
-                suit = "Diamonds";
-                break;
-            default:
-                return "Unknown";
-        }
-        switch (card % 13) {
-            case 0:
-                rank = "Ace";
-                break;
-            case 1:
-                rank = "02";
-                break;
-            case 2:
-                rank = "03";
-                break;
-            case 3:
-                rank = "04";
-                break;
-            case 4:
-                rank = "05";
-                break;
-            case 5:
-                rank = "06";
-                break;
-            case 6:
-                rank = "07";
-                break;
-            case 7:
-                rank = "08";
-                break;
-            case 8:
-                rank = "09";
-                break;
-            case 9:
-                rank = "10";
-                break;
-            case 10:
-                rank = "Jack";
-                break;
-            case 11:
-                rank = "Queen";
-                break;
-            case 12:
-                rank = "King";
-                break;
-            default:
-                return "Unknown"; //n mod 13 < 13, This code should be unreachable
-        }
+        final String[] ranks = {"Spades", "Hearts", "Clubs", "Diamonds"};
+        final String[] suits = {"Ace", "02", "03", "04", "05", "06", "07", "08", "09", "10","Jack","Queen","King"};
+        String rank = (card / 13) < 4 ? ranks[(card / 13)] : "Unknown";
+        String suit = (card % 13) < 13 ? suits[(card % 13)] : "Unknown";
         return suit + ":" + rank;
     }
 
@@ -287,29 +230,8 @@ public class BlackJack {
         if (card > 51 || card < 0) {
             return 0;
         }
-
-        switch (card % 13) {
-            case 0:
-                return 1;
-            case 1:
-                return 2;
-            case 2:
-                return 3;
-            case 3:
-                return 4;
-            case 4:
-                return 5;
-            case 5:
-                return 6;
-            case 6:
-                return 7;
-            case 7:
-                return 8;
-            case 8:
-                return 9;
-            default:
-                return 10;
-        }
+        final int[] point = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        return (card % 13) < 9 ? point[(card % 13)] : 10;
     }
 
 
